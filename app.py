@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# 🚀 Load the trained model and feature columns
+# Load the trained model and feature columns
 model = joblib.load("models/logistic_model.pkl")
 model_columns = joblib.load("models/columns.pkl")
 
@@ -10,7 +10,7 @@ st.set_page_config(page_title="Startup Success Predictor", layout="centered")
 st.title("🚀 Startup Success Predictor")
 st.write("Enter startup features below to predict whether it will succeed or not.")
 
-# 🧾 Form to input features
+# Form to input features
 with st.form("prediction_form"):
     st.subheader("🔧 Startup Details")
 
@@ -38,7 +38,7 @@ with st.form("prediction_form"):
     
     submitted = st.form_submit_button("Predict")
 
-# 🎯 Predict once form is submitted
+# Predict once form is submitted
 if submitted:
     # Create input dictionary
     user_input = {
@@ -65,15 +65,15 @@ if submitted:
     # Convert to DataFrame
     input_df = pd.DataFrame([user_input])
 
-    # 🧠 Add any missing columns (that model was trained with)
+    # Add any missing columns (that model was trained with)
     for col in model_columns:
         if col not in input_df.columns:
             input_df[col] = 0
 
-    # 📊 Reorder columns to match model
+    # Reorder columns to match model
     input_df = input_df[model_columns]
 
-    # ✅ Make prediction
+    # Make prediction
     prediction = model.predict(input_df)[0]
 
     st.markdown("---")
